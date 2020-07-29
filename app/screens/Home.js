@@ -18,7 +18,7 @@ const covidImage = require('../assets/covid.png');
 const HomeScreen = ({navigation}) => {
   return (
     <>
-      <StatusBar barStyle="light-content" />
+      <StatusBar translucent={true} backgroundColor={'#DDDDDD'} />
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
         <ScrollView>
           <View>

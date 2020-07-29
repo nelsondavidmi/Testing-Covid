@@ -11,16 +11,34 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
+import { Header } from "react-native-elements";
+import LinearGradient from 'react-native-linear-gradient';
 
 
 // @assets
 const backgroundImage = require('../assets/Background.jpg');
+const singInImage = require('../assets/SingIn.png');
 
 const SingIn = () => {
   return (
     <>
-      <StatusBar barStyle="light-content" />
+      <StatusBar translucent={true} backgroundColor={'transparent'} />
+      <Header
+        leftComponent={{ icon: 'home', color: '#fff' }}
+        centerComponent={{ text: 'LATN 19', style: { color: 'white', fontSize: 20, fontWeight: 'bold', 
+        letterSpacing: 2} }}
+        ViewComponent={LinearGradient}
+        linearGradientProps={{
+            colors: ['#8BDBF5', '#B8E9F9'],
+            start: { x: 0, y: 0.5 },
+            end: { x: 1, y: 0.5 },
+         }}
+        />
       <ImageBackground source={backgroundImage} style={styles.backgroungImage}>
+        <ScrollView>
+      <View style={styles.container}>
+        <Image source={singInImage} style={styles.signInImage} />
+        </View>
         <View style={styles.container}>
           <Text style={styles.textDescription}>Email, User or Phone</Text>
           <TextInput style={styles.textInput}></TextInput>
@@ -36,6 +54,7 @@ const SingIn = () => {
           Tap here
           </Text>
         </View>
+        </ScrollView>
       </ImageBackground>
     </>
   );
@@ -51,6 +70,13 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
+  },
+  signInImage: {
+    width: 350,
+    height: 350,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    alignContent: 'center',
   },
   textInput: {
     borderColor: 'black',
@@ -80,7 +106,7 @@ const styles = StyleSheet.create({
   textDescriptionForgot: {
     fontWeight: '500',
     fontSize: 14,
-    paddingTop: 80
+    paddingTop: 40
   },
   textClickHere: {
     textAlign: "center",

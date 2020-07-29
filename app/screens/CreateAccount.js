@@ -13,6 +13,7 @@ TouchableOpacity,
   Text,
   StatusBar,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 
 // @assets
@@ -21,7 +22,18 @@ const createAccountImage = require('../assets/CreateAccount.png')
 const CreateAccount = () => {
   return (
     <>
-      <StatusBar barStyle="light-content" />
+      <StatusBar translucent={true} backgroundColor={'transparent'} />
+      <Header
+        leftComponent={{ icon: 'home', color: '#fff' }}
+        centerComponent={{ text: 'LATN 19', style: { color: 'white', fontSize: 20, fontWeight: 'bold', 
+        letterSpacing: 2} }}
+        ViewComponent={LinearGradient}
+        linearGradientProps={{
+            colors: ['#8BDBF5', '#B8E9F9'],
+            start: { x: 0, y: 0.5 },
+            end: { x: 1, y: 0.5 },
+         }}
+        />
       <ImageBackground source={backgroundImage} style={styles.backgroungImage}>
       <ScrollView>
       <View style={styles.container}>

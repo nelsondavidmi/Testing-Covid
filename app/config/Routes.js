@@ -9,6 +9,7 @@ import {
 // @containers and screens
 import Home from '../screens/Home';
 import SignIn from '../screens/SingIn';
+import CreateAccount from "../screens/CreateAccount";
 
 const routes = {
   HomeScreen: {
@@ -17,6 +18,10 @@ const routes = {
   },
   SignInScreen: {
     screen: SignIn,
+    navigationOptions: {header: null},
+  },
+  CreateAccountScreen: {
+    screen: CreateAccount,
     navigationOptions: {header: null},
   },
 };

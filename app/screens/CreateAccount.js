@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'react-native-gesture-handler';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button'
 import { Header } from "react-native-elements";
-import {  
+import {
 TouchableOpacity,
   ImageBackground,
   StyleSheet,
@@ -14,12 +14,37 @@ TouchableOpacity,
   StatusBar,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 // @assets
 const backgroundImage = require('../assets/Background.jpg');
 const createAccountImage = require('../assets/CreateAccount.png')
 const CreateAccount = () => {
+    
+  const [name, setName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [cEmail, setCEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [cPassword, setCPassword] = useState('');  
+  
+  const storeData = async (value) => {
+      const user  = { 
+      name: name,
+      lastName: lastName,
+      email: email,
+      cEmail: cEmail,
+      password: password,
+      cPassword: cPassword
+    }
+        try {
+          await AsyncStorage.setItem('@storage_Key', value)
+        } catch (e) {
+          // saving error
+        }
+      }
+    
+    
   return (
     <>
       <StatusBar translucent={true} backgroundColor={'transparent'} />
@@ -41,21 +66,18 @@ const CreateAccount = () => {
         </View>
         <View style={styles.container}>
         <Text style={styles.textDescription}>First Name</Text>
-          <TextInput style={styles.textInput}></TextInput>
+          <TextInput value={name} style={styles.textInput} onChangeText={value => setName(value)}></TextInput>
           <Text style={styles.textDescription}>Last Name</Text>
-          <TextInput style={styles.textInput}></TextInput>
-          <Text style={styles.textDescription}>ID Type</Text>
-          <TextInput style={styles.textInput}></TextInput>
-          <Text style={styles.textDescription}>ID number</Text>
-          <TextInput style={styles.textInput}></TextInput>
+          <TextInput value={lastName} style={styles.textInput} onChangeText={value => setLastName(value)}></TextInput>
           <Text style={styles.textDescription}>Email</Text>
-          <TextInput style={styles.textInput}></TextInput>
+          <TextInput value={email} style={styles.textInput} onChangeText={value => setEmail(value)}></TextInput>
           <Text style={styles.textDescription}>Confirm Email</Text>
-          <TextInput style={styles.textInput}></TextInput>
+          <TextInput value={cEmail} style={styles.textInput} onChangeText={value => setCEmail(value)}></TextInput>
           <Text style={styles.textDescription} >Password</Text>
-          <TextInput style={styles.textInput} secureTextEntry={true}></TextInput>
+          <TextInput value={password} style={styles.textInput} secureTextEntry={true} onChangeText={value => setPassword(value)}></TextInput>
           <Text style={styles.textDescription}>Confirm Password</Text>
-          <TextInput style={styles.textInput} secureTextEntry={true}></TextInput>
+          <TextInput value={cPassword} style={styles.textInput} secureTextEntry={true} onChangeText={value => setCPassword(value)}></TextInput>
+            <Text style={styles.textDescription}>{(password===cPassword)?<Text></Text> : <Text>Check your password</Text>}</Text>
           <View style={styles.container}>
           <RadioGroup
             onSelect = {(index, value) => this.onSelect(index, value)}>
@@ -68,6 +90,8 @@ const CreateAccount = () => {
             </View>
             <View style={styles.container}>
             <TouchableOpacity
+                disabled={(password === cPassword ? false : true)}
+                onPress= {this.storeData}
                 style={styles.registerButton}>
                 <Text>REGISTER NOW</Text>
           </TouchableOpacity>

@@ -13,15 +13,49 @@ import {
 } from 'react-native';
 import { Header } from "react-native-elements";
 import LinearGradient from 'react-native-linear-gradient';
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 // @assets
 const backgroundImage = require('../assets/Background.jpg');
 const singInImage = require('../assets/SingIn.png');
 
-const SingIn = () => {
-  return (
-    <>
+export default class SingIn extends React.Component {
+constructor() {
+  super()
+
+  this.state = {
+    user: '',
+    password: ''
+  }
+}
+
+onChangeUser(value){
+  this.setState({
+    user: value
+  })
+}
+
+onChangePassword(value){
+  this.setState({
+    password: value
+  })
+}
+
+
+  render () {
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem('@storage_Key')
+        if(value !== null) {
+          // value previously stored
+        }
+      } catch(e) {
+        // error reading value
+      }
+    }
+
+    return(
+      <>
       <StatusBar translucent={true} backgroundColor={'transparent'} />
       <Header
         leftComponent={{ icon: 'home', color: '#fff' }}
@@ -41,9 +75,9 @@ const SingIn = () => {
         </View>
         <View style={styles.container}>
           <Text style={styles.textDescription}>Email, User or Phone</Text>
-          <TextInput style={styles.textInput}></TextInput>
+          <TextInput style={styles.textInput} value={this.state.user} onChangeText={value => this.onChangeUser(value)}></TextInput>
           <Text style={styles.textDescription}>Password</Text>
-          <TextInput style={styles.textInput} secureTextEntry={true}></TextInput>
+          <TextInput style={styles.textInput} secureTextEntry={true} value={this.state.password} onChangeText={value => this.onChangePassword(value)}></TextInput>
           <TouchableOpacity
                 style={styles.SignInButton}>
                 <Text>SIGN IN</Text>
@@ -56,9 +90,9 @@ const SingIn = () => {
         </View>
         </ScrollView>
       </ImageBackground>
-    </>
-  );
-};
+      </>
+  )
+}};
 
 const styles = StyleSheet.create({
   container: {
@@ -118,5 +152,3 @@ const styles = StyleSheet.create({
   }
   
   });
-
-export default SingIn;

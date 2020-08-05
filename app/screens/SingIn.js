@@ -10,6 +10,7 @@ import {
   View,
   Text,
   StatusBar,
+  Alert,
 } from 'react-native';
 import { Header } from "react-native-elements";
 import LinearGradient from 'react-native-linear-gradient';
@@ -25,7 +26,8 @@ constructor() {
 
   this.state = {
     user: '',
-    password: ''
+    password: '',
+    userStorage: null
   }
 }
 
@@ -40,20 +42,23 @@ onChangePassword(value){
     password: value
   })
 }
-
-
-  render () {
-    const getData = async () => {
-      try {
-        const value = await AsyncStorage.getItem('@storage_Key')
-        if(value !== null) {
-          // value previously stored
-        }
-      } catch(e) {
-        // error reading value
+async componentDidMount(){
+    try {
+      const value = await AsyncStorage.getItem('@user')
+      this.setState({userStorage: JSON.parse(value)})
+      console.log(value, 'Este es el valor')
+      if(value !== null) {
+        // value previously stored
       }
+    } catch(e) {
+      // error reading value
     }
+}
+  render () {
+    
+    const {user, password, userStorage} = this.state
 
+    const {navigation} = this.props
     return(
       <>
       <StatusBar translucent={true} backgroundColor={'transparent'} />
@@ -79,6 +84,7 @@ onChangePassword(value){
           <Text style={styles.textDescription}>Password</Text>
           <TextInput style={styles.textInput} secureTextEntry={true} value={this.state.password} onChangeText={value => this.onChangePassword(value)}></TextInput>
           <TouchableOpacity
+                onPress={() => navigation.navigate('WelcomePageScreen')}
                 style={styles.SignInButton}>
                 <Text>SIGN IN</Text>
           </TouchableOpacity>

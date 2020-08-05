@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 // @assets
 const backgroundImage = require('../assets/Background.jpg');
 const createAccountImage = require('../assets/CreateAccount.png')
-const CreateAccount = () => {
+const CreateAccount = ({navigation}) => {
     
   const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -30,21 +30,22 @@ const CreateAccount = () => {
   
   const storeData = async (value) => {
       const user  = { 
-      name: name,
-      lastName: lastName,
-      email: email,
-      cEmail: cEmail,
-      password: password,
-      cPassword: cPassword
+      name,
+      lastName,
+      email,
+      cEmail,
+      password,
+      cPassword
     }
         try {
-          await AsyncStorage.setItem('@storage_Key', value)
+          await AsyncStorage.setItem('@user', JSON.stringify(user))
+          navigation.navigate('SignInScreen')
+          console.log('Entro',user)
         } catch (e) {
           // saving error
         }
       }
-    
-    
+
   return (
     <>
       <StatusBar translucent={true} backgroundColor={'transparent'} />
@@ -90,8 +91,8 @@ const CreateAccount = () => {
             </View>
             <View style={styles.container}>
             <TouchableOpacity
-                disabled={(password === cPassword ? false : true)}
-                onPress= {this.storeData}
+                disabled= {false}
+                onPress= {storeData}
                 style={styles.registerButton}>
                 <Text>REGISTER NOW</Text>
           </TouchableOpacity>

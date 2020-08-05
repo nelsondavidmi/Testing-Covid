@@ -10,6 +10,7 @@ import {
 import Home from '../screens/Home';
 import SignIn from '../screens/SingIn';
 import CreateAccount from "../screens/CreateAccount";
+import WelcomePage from "../screens/WelcomePage";
 
 const routes = {
   HomeScreen: {
@@ -24,6 +25,10 @@ const routes = {
     screen: CreateAccount,
     navigationOptions: {header: null},
   },
+  WelcomePageScreen: {
+    screen: WelcomePage,
+    navigationOptions: {header: null},
+  }
 };
 
 export default routes;
